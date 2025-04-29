@@ -1,6 +1,5 @@
 package com.matheus.jatasks.models;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,10 +18,11 @@ public class TaskModel {
     private String category;
     private boolean active;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Nullable
+    @Column(name = "updated_at", insertable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 }
