@@ -1,4 +1,4 @@
-package com.matheus.jatasks.services;
+package com.matheus.jatasks.useCases;
 
 import com.matheus.jatasks.dtos.CreateTaskDTO;
 import com.matheus.jatasks.models.TaskModel;
