@@ -1,4 +1,4 @@
-package com.matheus.jatasks.models;
+package com.matheus.jacourses.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,11 +13,11 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "tasks")
+@Table(name = "courses")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskModel {
+public class CourseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

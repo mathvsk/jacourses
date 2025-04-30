@@ -1,10 +1,10 @@
-package com.matheus.jatasks.controllers;
+package com.matheus.jacourses.controllers;
 
-import com.matheus.jatasks.dtos.CreateTaskDTO;
-import com.matheus.jatasks.dtos.GetAllTasksDTO;
-import com.matheus.jatasks.dtos.UpdateTaskDTO;
-import com.matheus.jatasks.exceptions.NotFoundException;
-import com.matheus.jatasks.useCases.*;
+import com.matheus.jacourses.dtos.CreateCourseDTO;
+import com.matheus.jacourses.dtos.GetAllCourseDTO;
+import com.matheus.jacourses.dtos.UpdateCourseDTO;
+import com.matheus.jacourses.exceptions.NotFoundException;
+import com.matheus.jacourses.useCases.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,26 +15,26 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/jatask")
-public class JataskController {
+public class CourseController {
 
     @Autowired
-    private CreateTaskUseCase createTaskUseCase;
+    private CreateCourseUseCase createCourseUseCase;
 
     @Autowired
-    private GetAllTasksUseCase getAllTasksUseCase;
+    private GetAllCoursesUseCase getAllCoursesUseCase;
 
     @Autowired
-    private UpdateTaskUseCase updateTaskUseCase;
+    private UpdateCourseUseCase updateCourseUseCase;
 
     @Autowired
-    private UpdateActiveTaskUseCase updateActiveTaskUseCase;
+    private UpdateActiveCourseUseCase updateActiveCourseUseCase;
 
     @Autowired
-    private DeleteTaskUseCase deleteTaskUseCase;
+    private DeleteCourseUseCase deleteCourseUseCase;
 
     @GetMapping("/courses")
-    public ResponseEntity<List<GetAllTasksDTO>> getAll() {
-        var result = this.getAllTasksUseCase.execute();
+    public ResponseEntity<List<GetAllCourseDTO>> getAll() {
+        var result = this.getAllCoursesUseCase.execute();
 
         if (result.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -44,15 +44,15 @@ public class JataskController {
     }
 
     @PostMapping("/courses")
-    public ResponseEntity<Object> create(@Valid @RequestBody CreateTaskDTO createTaskDTO) {
-        this.createTaskUseCase.execute(createTaskDTO);
+    public ResponseEntity<Object> create(@Valid @RequestBody CreateCourseDTO createCourseDTO) {
+        this.createCourseUseCase.execute(createCourseDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/courses/{id}")
-    public ResponseEntity<Object> update(@PathVariable String id, @Valid @RequestBody UpdateTaskDTO updateTaskDTO) {
+    public ResponseEntity<Object> update(@PathVariable String id, @Valid @RequestBody UpdateCourseDTO updateCourseDTO) {
         try {
-            this.updateTaskUseCase.execute(id, updateTaskDTO);
+            this.updateCourseUseCase.execute(id, updateCourseDTO);
 
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (NotFoundException e) {
@@ -63,7 +63,7 @@ public class JataskController {
     @PatchMapping("/courses/{id}/active")
     public ResponseEntity<Object> updateActive(@PathVariable String id) {
         try {
-            this.updateActiveTaskUseCase.execute(id);
+            this.updateActiveCourseUseCase.execute(id);
 
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (NotFoundException e) {
@@ -74,7 +74,7 @@ public class JataskController {
     @DeleteMapping("/courses/{id}")
     public ResponseEntity<Object> delete(@PathVariable String id) {
         try {
-            this.deleteTaskUseCase.execute(id);
+            this.deleteCourseUseCase.execute(id);
 
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (NotFoundException e) {

@@ -1,24 +1,23 @@
-package com.matheus.jatasks.useCases;
+package com.matheus.jacourses.useCases;
 
-import com.matheus.jatasks.dtos.GetAllTasksDTO;
-import com.matheus.jatasks.models.TaskModel;
-import com.matheus.jatasks.repositories.TaskRepository;
+import com.matheus.jacourses.dtos.GetAllCourseDTO;
+import com.matheus.jacourses.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class GetAllTasksUseCase {
+public class GetAllCoursesUseCase {
 
     @Autowired
-    private TaskRepository taskRepository;
+    private CourseRepository courseRepository;
 
-    public List<GetAllTasksDTO> execute() {
-        var tasks = taskRepository.findAll();
+    public List<GetAllCourseDTO> execute() {
+        var tasks = courseRepository.findAll();
 
         return tasks.stream()
-                .map(task -> GetAllTasksDTO.builder()
+                .map(task -> GetAllCourseDTO.builder()
                         .id(task.getId())
                         .name(task.getName())
                         .category(task.getCategory())

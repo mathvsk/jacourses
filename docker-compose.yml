@@ -2,7 +2,7 @@ version: '3.8'
 services:
   db:
     image: postgres:15
-    container_name: jatask_db
+    container_name: jacourses_db
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data_jatask
+      - postgres_data:/var/lib/postgresql/data_jacourses
 
 volumes:
   postgres_data:

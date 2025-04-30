@@ -1,19 +1,21 @@
-package com.matheus.jatasks.dtos;
+package com.matheus.jacourses.dtos;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAllTasksDTO {
-    private UUID id;
+public class CreateCourseDTO {
+
+    @NotNull
     private String name;
+
+    @NotNull
     private String category;
     private boolean active;
 }
