@@ -2,8 +2,11 @@ package com.matheus.jatasks.controllers;
 
 import com.matheus.jatasks.dtos.CreateTaskDTO;
 import com.matheus.jatasks.dtos.GetAllTasksDTO;
+import com.matheus.jatasks.dtos.UpdateTaskDTO;
+import com.matheus.jatasks.exceptions.NotFounException;
 import com.matheus.jatasks.useCases.CreateTaskUseCase;
 import com.matheus.jatasks.useCases.GetAllTasksUseCase;
+import com.matheus.jatasks.useCases.UpdateTaskUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,9 @@ public class JataskController {
     @Autowired
     private GetAllTasksUseCase getAllTasksUseCase;
 
+    @Autowired
+    private UpdateTaskUseCase updateTaskUseCase;
+
     @GetMapping("/courses")
     public ResponseEntity<List<GetAllTasksDTO>> getAll() {
         var result = this.getAllTasksUseCase.execute();
@@ -37,5 +43,16 @@ public class JataskController {
     public ResponseEntity<Object> create(@Valid @RequestBody CreateTaskDTO createTaskDTO) {
         this.createTaskUseCase.execute(createTaskDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/courses/{id}")
+    public ResponseEntity<Object> update(@PathVariable String id, @Valid @RequestBody UpdateTaskDTO updateTaskDTO) {
+        try {
+            this.updateTaskUseCase.execute(id, updateTaskDTO);
+
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (NotFounException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
