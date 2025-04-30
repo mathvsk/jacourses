@@ -4,10 +4,7 @@ import com.matheus.jatasks.dtos.CreateTaskDTO;
 import com.matheus.jatasks.dtos.GetAllTasksDTO;
 import com.matheus.jatasks.dtos.UpdateTaskDTO;
 import com.matheus.jatasks.exceptions.NotFoundException;
-import com.matheus.jatasks.useCases.CreateTaskUseCase;
-import com.matheus.jatasks.useCases.GetAllTasksUseCase;
-import com.matheus.jatasks.useCases.UpdateActiveTaskUseCase;
-import com.matheus.jatasks.useCases.UpdateTaskUseCase;
+import com.matheus.jatasks.useCases.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +28,9 @@ public class JataskController {
 
     @Autowired
     private UpdateActiveTaskUseCase updateActiveTaskUseCase;
+
+    @Autowired
+    private DeleteTaskUseCase deleteTaskUseCase;
 
     @GetMapping("/courses")
     public ResponseEntity<List<GetAllTasksDTO>> getAll() {
@@ -64,6 +64,17 @@ public class JataskController {
     public ResponseEntity<Object> updateActive(@PathVariable String id) {
         try {
             this.updateActiveTaskUseCase.execute(id);
+
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @DeleteMapping("/courses/{id}")
+    public ResponseEntity<Object> delete(@PathVariable String id) {
+        try {
+            this.deleteTaskUseCase.execute(id);
 
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (NotFoundException e) {
