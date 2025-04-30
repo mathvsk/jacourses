@@ -3,7 +3,7 @@ package com.matheus.jatasks.controllers;
 import com.matheus.jatasks.dtos.CreateTaskDTO;
 import com.matheus.jatasks.dtos.GetAllTasksDTO;
 import com.matheus.jatasks.dtos.UpdateTaskDTO;
-import com.matheus.jatasks.exceptions.NotFounException;
+import com.matheus.jatasks.exceptions.NotFoundException;
 import com.matheus.jatasks.useCases.CreateTaskUseCase;
 import com.matheus.jatasks.useCases.GetAllTasksUseCase;
 import com.matheus.jatasks.useCases.UpdateActiveTaskUseCase;
@@ -55,7 +55,7 @@ public class JataskController {
             this.updateTaskUseCase.execute(id, updateTaskDTO);
 
             return ResponseEntity.status(HttpStatus.OK).build();
-        } catch (NotFounException e) {
+        } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -66,7 +66,7 @@ public class JataskController {
             this.updateActiveTaskUseCase.execute(id);
 
             return ResponseEntity.status(HttpStatus.OK).build();
-        } catch (NotFounException e) {
+        } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
