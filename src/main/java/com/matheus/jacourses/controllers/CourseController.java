@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/jatask")
+@RequestMapping("/api/v1/courses")
 public class CourseController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class CourseController {
     @Autowired
     private DeleteCourseUseCase deleteCourseUseCase;
 
-    @GetMapping("/courses")
+    @GetMapping()
     public ResponseEntity<List<GetAllCourseDTO>> getAll() {
         var result = this.getAllCoursesUseCase.execute();
 
@@ -43,13 +43,13 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @PostMapping("/courses")
+    @PostMapping()
     public ResponseEntity<Object> create(@Valid @RequestBody CreateCourseDTO createCourseDTO) {
         this.createCourseUseCase.execute(createCourseDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/courses/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable String id, @Valid @RequestBody UpdateCourseDTO updateCourseDTO) {
         try {
             this.updateCourseUseCase.execute(id, updateCourseDTO);
@@ -60,7 +60,7 @@ public class CourseController {
         }
     }
 
-    @PatchMapping("/courses/{id}/active")
+    @PatchMapping("/{id}/active")
     public ResponseEntity<Object> updateActive(@PathVariable String id) {
         try {
             this.updateActiveCourseUseCase.execute(id);
@@ -71,7 +71,7 @@ public class CourseController {
         }
     }
 
-    @DeleteMapping("/courses/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable String id) {
         try {
             this.deleteCourseUseCase.execute(id);
